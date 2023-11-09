@@ -1,0 +1,32 @@
+{% block styles %}
+    <style>
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: #f9f9f9;
+        }
+
+        .table th, .table td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: left;
+        }
+
+        .table th {
+            background-color: #e6e6e6;
+        }
+
+        .table tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        .table tr:hover {
+            background-color: #ddd;
+        }
+    </style>
+{% endblock %}
+
+<h1>{{ author.username }}</h1>
+<img src="{{ asset(author.picture) }}" alt="{{ author.username }}'s Picture">
+<p>Email: {{ author.email }}</p>
+<p>Number of Books: {{ author.nb_books }}</p>

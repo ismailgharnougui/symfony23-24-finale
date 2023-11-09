@@ -1,0 +1,98 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des Books{% endblock %}
+
+{% block body %}
+
+{% block styles %}
+    <style>
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: #f9f9f9;
+        }
+
+        .table th, .table td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: left;
+        }
+
+        .table th {
+            background-color: #e6e6e6;
+        }
+
+        .table tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        .table tr:hover {
+            background-color: #ddd;
+        }
+    </style>
+{% endblock %}
+
+
+
+    {% if books|length >0 %}
+    <h1>Liste des books</h1>
+    {% set publishedCount = 0 %}
+    {% set notPublishedCount = 0 %}
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Ref</th>
+                <th>Title</th>
+                <th>Category</th>
+                <th>Publication Date</th>
+                <th>Published</th>
+                <th>Author</th>
+                <th>Delete</th>
+                <th>Update</th>
+                <th>Show</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for book in books %}
+                {% if book.published == true %}
+                    {% set publishedCount = publishedCount + 1 %}
+                    <tr>
+                        <td>{{ book.ref }}</td>
+                        <td>{{ book.title }}</td>
+                        <td>{{ book.category }}</td>
+                        <td>{{ book.publicationDate|date('Y-m-d') }}</td>
+                        <td>{{ book.published }}</td>
+                        <td>{{ book.author }}</td>
+                        <td><a href="{{ path('delete_book', {'ref': book.ref}) }}">Delete</a></td>
+                        <td><a href="{{ path('update_book', {'ref': book.ref}) }}">Update</a></td>
+                        <td><a href="{{ path('book_details', {'ref': book.ref}) }}">Show</a></td>
+                    </tr>
+                {% else %}
+                    {% set notPublishedCount = notPublishedCount + 1 %}
+                {% endif %}
+            {% endfor %}
+        </tbody>
+    </table>
+    <h4>Nombre de livres publiés : {{ publishedCount }}</h4>
+    <h4>Nombre de livres non publiés : {{ notPublishedCount }}</h4>
+    <button><a href="{{ path('add_book') }}">Create New</a></button>
+    <button><a href="{{ path('delete_if_zero') }}">Delete If Zero</a></button>
+    <button><a href="{{ path('triTitle') }}">Tri Par Tirle</a></button>
+
+    <form action="{{ path('search_books') }}" method="GET">
+        <label for="ref">Entrez un Ref :</label>
+        <input type="number" id="ref" name="ref" placeholder="Saisissez un ref" required>
+        <input type="submit" value="Chercher">
+    </form>
+
+    <button><a href="{{ path('tri_book') }}">Tri</a></button>
+    <button><a href="{{ path('showOnly') }}">Books before 2023</a></button>
+    <button><a href="{{ path('updateBooksCategory') }}">updateBooksCategory</a></button>
+    <button><a href="{{ path('countRomance') }}">How much Romance ?</a></button>
+    <button><a href="{{ path('findBooksPublishedBetween2014And2018') }}">Books Published Between 2014 And 2018 ?</a></button>
+    
+
+    {% else %}
+        {{ "Pas de livres" }}
+    {% endif %}
+{% endblock %}

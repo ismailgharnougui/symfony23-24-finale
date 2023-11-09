@@ -1,0 +1,5 @@
+# config/routes.yaml
+
+student_index:
+    path: /students
+    controller: 'App\Controller\StudentController::index'

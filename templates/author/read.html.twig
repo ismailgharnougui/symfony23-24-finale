@@ -1,0 +1,77 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des auteurs{% endblock %}
+
+{% block body %}
+
+{% block styles %}
+    <style>
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: #f9f9f9;
+        }
+
+        .table th, .table td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: left;
+        }
+
+        .table th {
+            background-color: #e6e6e6;
+        }
+
+        .table tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        .table tr:hover {
+            background-color: #ddd;
+        }
+    </style>
+{% endblock %}
+
+
+
+    <h1>Liste des auteurs</h1>
+
+    <form action="{{ path('findAuthorsByBookCount') }}" method="GET">
+        <label for="min">Min Number :</label>
+        <input type="number" id="min" name="min" placeholder="Minimum Books" required>
+
+        <label for="max">Max Number :</label>
+        <input type="number" id="max" name="max" placeholder="Maximum Books" required>
+
+
+        <input type="submit" value="Chercher">
+    </form>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Delete</th>
+                <th>Update</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for author in authors %}
+                <tr>
+                    <td>{{ author.id }}</td>
+                    <td>{{ author.username }}</td>
+                    <td>{{ author.email }}</td>
+                    <td><a href="{{ path('delete_author', {'id': author.id}) }}">Delete</a></td>
+                    <td><a href="{{ path('update_author', {'id': author.id}) }}">Update</a></td>
+
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <button><a href="{{ path('add_author') }}">Add</a></button>
+    <button><a href="{{ path('tri_author') }}">Tri</a></button>
+    <button><a href="{{ path('deleteAuthorsWithZeroBooks') }}">Delete authors with 0 books</a></button>
+    
+{% endblock %}

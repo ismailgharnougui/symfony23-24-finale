@@ -1,0 +1,61 @@
+<table>
+  <tr>
+    <th>ID</th>
+    <th>Picture</th>
+    <th>Username</th>
+    <th>Email</th>
+    <th>Number of Books</th>
+    <th>Number of authors</th>
+    <th>Total of books</th>
+    <th>Details</th>
+  </tr>
+  {% set total_books =0 %}
+  {% if authors is defined and authors|length >0 %}
+
+        {% for author in authors %}
+            <tr>
+            <td>{{ author.id }}</td>
+            <td><img src="{{ asset(author.picture) }}"></td>
+            <td>{{ author.username | upper }}</td>
+            <td>{{ author.email }}</td>
+            <td>{{ author.nb_books }}</td>
+            {% set total_books = total_books + author.nb_books %}
+            <td>{{ authors|length }}</td>
+            <td>{{ totalBooks }}</td>
+            <td><a href="{{ path('author_details', {'id': author.id}) }}">Détails</a></td>
+            </tr>
+        {% endfor %}
+        <td> {{ total_books }} </td>
+    {% else %}
+        <h1> Tableau est vide </h1>
+
+  {% endif %}
+
+
+
+
+
+
+
+
+
+
+
+
+</table>
+<style>
+  table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+
+  th, td {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+  }
+
+  th {
+    background-color: #f2f2f2;
+  }
+</style>
