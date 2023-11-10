@@ -23,7 +23,7 @@ class BookController extends AbstractController
         ]);
     }
     
-    #[Route('/book/add', name: "add_book")]
+    #[Route('/bookadd', name: "add_book")]
     public function addBook(ManagerRegistry $doctrine, Request $req)
     {
 
@@ -51,7 +51,7 @@ class BookController extends AbstractController
     }
 
 
-    #[Route('/book/read', name: "read_books")]
+    #[Route('/bookread', name: "read_books")]
     public function readBook(BookRepository $bookrepo)
     {
         $books = $bookrepo->findAll();
@@ -60,7 +60,7 @@ class BookController extends AbstractController
         ]);
     }
 
-    #[Route('/book/delete/{ref}', name: "delete_book")]
+    #[Route('/bookdelete/{ref}', name: "delete_book")]
     public function deleteBook($ref, BookRepository $bookrepo, ManagerRegistry $doctrine)
     {
 
@@ -76,7 +76,7 @@ class BookController extends AbstractController
     }
 
 
-    #[Route('/book/update/{ref}', name: "update_book")]
+    #[Route('/bookupdate/{ref}', name: "update_book")]
     public function updateBook($ref, BookRepository $bookrepo, ManagerRegistry $doctrine, Request $req)
     {
 
@@ -99,7 +99,7 @@ class BookController extends AbstractController
         return $this->renderForm("book/update.html.twig", ["frm" => $frm]);
     }
 
-    #[Route('/book/details/{ref}', name: 'book_details')]
+    #[Route('/bookdetails/{ref}', name: 'book_details')]
     public function bookDetails($ref, BookRepository $bookrepo, ManagerRegistry $doctrine): Response
     {
         $em = $doctrine->getManager();
@@ -114,7 +114,7 @@ class BookController extends AbstractController
         ]);
     }
 
-    #[Route('/book/deleteIfZero', name: "delete_if_zero")]
+    #[Route('/bookdeleteIfZero', name: "delete_if_zero")]
     public function deleteIfZero(AuthorRepository $authorrep, ManagerRegistry $doctrine)
     {
         $em = $doctrine->getManager();
@@ -128,7 +128,7 @@ class BookController extends AbstractController
     }
 
     
-    #[Route('/book/search', name: "search_books")]
+    #[Route('/booksearch', name: "search_books")]
     public function searchBookByRef(BookRepository $bookrepo, Request $req)
     {
         $ref = $req->get('ref');
@@ -138,7 +138,7 @@ class BookController extends AbstractController
         ]);
     }
 
-    #[Route('/book/triTitle', name: "triTitle")]
+    #[Route('/booktriTitle', name: "triTitle")]
     public function triTitle(BookRepository $rep)
     {
         $books = $rep->triTitle();
@@ -147,7 +147,7 @@ class BookController extends AbstractController
         ]);
     }
 
-    #[Route('/book/tri', name: 'tri_book')]
+    #[Route('/booktri', name: 'tri_book')]
     public function booksListByAuthors(BookRepository $bookrep): Response
     {
         $books = $bookrep->booksListByAuthors();
@@ -157,7 +157,7 @@ class BookController extends AbstractController
         ]);
     }
 
-    #[Route('/book/showOnly', name: 'showOnly')]
+    #[Route('/bookshowOnly', name: 'showOnly')]
     public function showOnly(BookRepository $bookrep): Response
     {
         $books = $bookrep->findBooksBefore2023();
@@ -167,7 +167,7 @@ class BookController extends AbstractController
         ]);
     }
 
-    #[Route('/book/updateBooksCategory', name: 'updateBooksCategory')]
+    #[Route('/bookupdateBooksCategory', name: 'updateBooksCategory')]
     public function updateBooksCategory(BookRepository $bookrep): Response
     {
         $books = $bookrep->updateBooksCategory();
@@ -175,7 +175,7 @@ class BookController extends AbstractController
         return $this->redirectToRoute("read_books");
     }
 
-    #[Route('/book/countRomance', name: 'countRomance')]
+    #[Route('/bookcountRomance', name: 'countRomance')]
     public function countRomance(BookRepository $bookrep): Response
     {
         $booksCount = $bookrep->countRomance('Romance');
@@ -185,7 +185,7 @@ class BookController extends AbstractController
         ]);
     }
 
-    #[Route('/book/findBooksPublishedBetween2014And2018', name: 'findBooksPublishedBetween2014And2018')]
+    #[Route('/bookfindBooksPublishedBetween2014And2018', name: 'findBooksPublishedBetween2014And2018')]
     public function findBooksPublishedBetween2014And2018(BookRepository $bookrep): Response
     {
         $books = $bookrep->findBooksPublishedBetween2014And2018();
@@ -194,25 +194,25 @@ class BookController extends AbstractController
             'books' => $books,
         ]);
     }
+/*
+     #[Route('/book/search', name: "search_books")]
+     public function searchBook(BookRepository $bookrepo, $ref, Request $req)
+     {
+        $books = new Book();
+       $fr = $this->createForm(SearchType::class, $books);
+      $fr->handleRequest($req);
+         if ($fr->isSubmitted()) {
+            $ref = $books->getRef();
+                     $books = $bookrepo->searchQB($ref); 
+            return $this->render("book/SearchBook.html.twig", [
+                 "fr" => $fr->createView(),
+                 "books" => $books,
+             ]);
+         }
+        return $this->render("book/readBook.html.twig", [
+             "books" => $books,
+         ]);
 
-    // #[Route('/book/search', name: "search_books")]
-    // public function searchBook(BookRepository $bookrepo, $ref, Request $req)
-    // {
-    //     $books = new Book();
-    //     $fr = $this->createForm(SearchType::class, $books);
-    //     $fr->handleRequest($req);
-    //     if ($fr->isSubmitted()) {
-    //         $ref = $books->getRef();
-    //         $books = $bookrepo->searchQB($ref); 
-    //         return $this->render("book/SearchBook.html.twig", [
-    //             "fr" => $fr->createView(),
-    //             "books" => $books,
-    //         ]);
-    //     }
-    //     return $this->render("book/readBook.html.twig", [
-    //         "books" => $books,
-    //     ]);
-
-    // }
-
+     }
+*/
 }

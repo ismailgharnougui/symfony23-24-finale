@@ -10,8 +10,8 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: AuthorRepository::class)]
 class Author
 {
-    #[ORM\Id]//primary key
-    #[ORM\GeneratedValue]//auto increment
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
@@ -105,6 +105,6 @@ class Author
 
     public function __toString()
     {
-        return $this->userName; // Replace 'name' with the actual property of the Author entity that you want to use as the string representation.
+        return $this->userName; 
     }
 }
